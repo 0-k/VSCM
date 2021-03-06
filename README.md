@@ -8,6 +8,7 @@ A very simple multiple linear regression model of the Earth's climate in Python.
 * CO2 concentration in the atmosphere in PPM
 * Methane concentration in the atmosphere in PPB
 * SO2 emissions per year
+* Aerosols in the atmosphere (Volcanic activity)
 * Solar irradiance
 
 Predicting:
@@ -23,4 +24,7 @@ Other assumptions:
 
 Data source:
 
-ourworldindata.org
+* CO2: https://ourworldindata.org/atmospheric-concentrations
+* Methane: https://ourworldindata.org/atmospheric-concentrations
+* SO2: https://ourworldindata.org/air-pollution-does-it-get-worse-before-it-gets-better
+* Aerosols: https://data.giss.nasa.gov/modelforce/strataer/
