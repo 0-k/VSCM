@@ -1,4 +1,4 @@
-# Very Simply Climate Model (VSCM)
+# VSCM (Very Simple Climate Model)
 
 A very simple multiple linear regression model of the Earth's climate in Python.
 
