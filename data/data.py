@@ -1,25 +1,30 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 import constants
 
 
 class Data:
 
     def __init__(self):
-        self.temperature = self.__temperature()
-        self.forcing = self.__forcing()
-        self.co2 = self.__co2()
-        self.ch4 = self.__ch4()
-        self.irradiance = self.__irradiance()
-        self.so2 = self.__so2()
-        self.aerosols = self.__aerosols()
+        self.values = self.__prepare_data()
+
+    def __prepare_data(self):
+        temperature = self.__temperature()
+        forcing = self.__forcing()
+        co2 = self.__co2()
+        ch4 = self.__ch4()
+        irradiance = self.__irradiance()
+        so2 = self.__so2()
+        aerosols = self.__aerosols()
+        return pd.DataFrame([temperature, forcing, co2, ch4, irradiance, so2, aerosols]).transpose()
 
     def __temperature(self):
         t1 = self.__temperature_dataset1()
         t2 = self.__temperature_dataset2()
         t3 = self.__temperature_dataset3()
         t = pd.DataFrame([t1, t2, t3]).transpose()
-        return t.mean(axis=1)
+        return t.mean(axis=1).rename('Temperature')
 
     def __temperature_dataset1(self):
         df = pd.read_csv('temperature-anomaly.csv', index_col=1, header=0, parse_dates=True, squeeze=True,
@@ -43,7 +48,8 @@ class Data:
         co2 = co2 - constants.PRE_INDUSTRIAL_CO2
         ch4 = self.__ch4()
         ch4 = (ch4 - constants.PRE_INDUSTRIAL_CH4)/1000 * constants.GWP_CH4
-        return co2 + ch4
+        forcing = co2 + ch4
+        return forcing.rename('Forcing')
 
     def __co2(self):
         data = pd.read_csv('global-co-concentration-ppm.csv', index_col=0, names=['CO2'], header=0, parse_dates=True,
@@ -79,7 +85,9 @@ class Data:
 
 
 if __name__ == '__main__':
-    data = Data()
-    plt.plot(data.temperature)
+    data = Data().values
+    data = data.dropna()
+    print('Correlation coefficient: ' + str(np.corrcoef(data.Temperature, data.Forcing)[0,1].round(3)))
+    plt.scatter(data.Temperature, data.Forcing)
     plt.show()
 
