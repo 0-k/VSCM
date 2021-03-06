@@ -26,6 +26,7 @@ A very simple multiple linear regression model of the Earth's climate in Python.
 * Solar irradiance: https://lasp.colorado.edu/lisird/data/historical_tsi/
 * Temperature Dataset 1: https://ourworldindata.org/grapher/temperature-anomaly
 * Temperature Dataset 2: https://data.giss.nasa.gov/gistemp/graphs_v4/
+* Temperature Dataset 3: https://www.ncdc.noaa.gov/cag/global/time-series/globe/land_ocean/ann/1/1880-2021
 
 
 ### Other assumptions:
