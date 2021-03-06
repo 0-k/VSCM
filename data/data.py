@@ -1,8 +1,9 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 def __resample(data):
-    return data.__resample('Y').mean().interpolate(method='linear')
+    return data.resample('Y').mean().interpolate(method='linear')
 
 
 def ch4():
@@ -38,7 +39,15 @@ def aerosols():
     return __resample(data)
 
 
-def temperature_dataset1():
+def temperature():
+    t1 = __temperature_dataset1()
+    t2 = __temperature_dataset2()
+    t3 = __temperature_dataset3()
+    t = pd.DataFrame([t1, t2, t3]).transpose()
+    return t.mean(axis=1)
+
+
+def __temperature_dataset1():
     data = pd.read_csv('temperature-anomaly.csv', index_col=1, header=0,
                                        parse_dates=True, squeeze=True, skiprows=range(171, 681),
                                        names=['.', 'Temperature1', '..', '...'])
@@ -46,16 +55,20 @@ def temperature_dataset1():
     return __resample(data)
 
 
-def temperature_dataset2():
+def __temperature_dataset2():
     data = pd.read_csv('temperature-NASA.csv', index_col=0, header=2, parse_dates=True, squeeze=True,
                         names=['Temperature2', '.'])
     data = data['Temperature2']
     return __resample(data)
 
 
-def temperature_dataset3():
+def __temperature_dataset3():
     data = pd.read_csv('temperature-NOAA.csv', index_col=0, header=4, parse_dates=True, squeeze=True,
                         names=['Temperature3'])
     return __resample(data)
 
 
+if __name__ == '__main__':
+    t = temperature()
+    plt.plot(t)
+    plt.show()
